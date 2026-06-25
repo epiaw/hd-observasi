@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Observasi QB-HD | RSUD Welas Asih</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --navy:#0D2137;--teal:#0E7C7B;--tealL:#E0F4F4;--tealD:#065F5E;
+  --green:#1B7A3E;--greenL:#E6F4EC;--orange:#C25B00;--orangeL:#FFF3E6;
+  --red:#B71C1C;--redL:#FFEBEE;--blue:#1565C0;--blueL:#E3F2FD;
+  --slate:#37474F;--slateL:#ECEFF1;--ink:#1A1A2E;--muted:#78909C;
+  --border:#CFD8DC;--purple:#5C35A0;--purpleL:#EDE7F6;
+}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#F0F4F8;color:var(--ink);min-height:100vh;}
+
+/* TOPBAR */
+#topbar{background:var(--navy);padding:0 14px;display:flex;align-items:stretch;box-shadow:0 2px 12px #0006;position:sticky;top:0;z-index:100;}
+.logo{display:flex;align-items:center;gap:10px;padding:11px 0;margin-right:auto;}
+.logo-icon{width:32px;height:32px;background:var(--teal);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.logo-title{color:#fff;font-weight:800;font-size:13px;}
+.logo-sub{display:flex;align-items:center;gap:5px;margin-top:2px;}
+.dot{width:6px;height:6px;border-radius:50%;background:#4CAF50;box-shadow:0 0 5px #4CAF50;}
+.logo-status{color:#7FB3D3;font-size:10px;}
+.tab-btn{background:transparent;color:#7FB3D3;border:none;cursor:pointer;padding:0 14px;font-weight:700;font-size:12px;border-bottom:3px solid transparent;transition:all .2s;}
+.tab-btn.active{background:var(--teal);color:#fff;border-bottom:3px solid #fff;}
+.top-action{background:var(--green);color:#fff;border:none;cursor:pointer;padding:0 12px;font-weight:700;font-size:11px;}
+.top-action.purple{background:#7B1FA2;margin-left:3px;}
+
+/* MAIN */
+#main{max-width:820px;margin:0 auto;padding:16px;}
+
+/* CARDS */
+.card{background:#fff;border-radius:12px;padding:16px;margin-bottom:14px;box-shadow:0 1px 6px #0001;}
+.sec-header{border-radius:8px;padding:8px 16px;margin-bottom:10px;display:flex;align-items:center;gap:10px;}
+.sec-header span{color:#fff;font-weight:800;font-size:14px;}
+
+/* FORM */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+.grid6{display:grid;grid-template-columns:repeat(6,1fr);gap:5px;}
+.full{grid-column:1/-1;}
+label.lbl{font-size:11px;font-weight:700;color:var(--slate);display:block;margin-bottom:4px;}
+input[type=text],input[type=number],input[type=date]{width:100%;border:1.5px solid var(--border);border-radius:6px;padding:6px 10px;font-size:13px;color:var(--ink);background:#fff;outline:none;box-sizing:border-box;}
+input[type=number].center{text-align:center;font-weight:700;font-size:14px;}
+.radio-group{display:flex;gap:8px;margin-top:4px;}
+.radio-opt{flex:1;display:flex;align-items:center;justify-content:center;gap:5px;cursor:pointer;font-size:13px;padding:6px 8px;border-radius:6px;border:1.5px solid var(--border);background:#fff;font-weight:400;transition:all .15s;user-select:none;}
+.radio-opt.active-blue{border-color:var(--blue);background:var(--blueL);font-weight:700;}
+.radio-opt.active-teal{border-color:var(--teal);background:var(--tealL);font-weight:700;}
+.radio-opt.active-purple{border-color:var(--purple);background:var(--purpleL);font-weight:700;color:var(--purple);}
+
+/* QB waktu labels */
+.wb-lbl{font-size:10px;color:var(--muted);text-align:center;margin-bottom:3px;font-weight:600;}
+
+/* AUTO FIELD */
+.af{border-radius:6px;padding:6px 12px;min-width:80px;}
+.af-lbl{font-size:10px;font-weight:700;margin-bottom:2px;}
+.af-val{font-size:15px;font-weight:800;}
+
+/* IDH CELLS */
+.idh-cell{text-align:center;cursor:pointer;}
+.idh-btn{border:2px solid var(--border);background:#fff;border-radius:8px;padding:8px 0;font-size:20px;transition:all .15s;user-select:none;}
+.idh-btn.checked{border-color:var(--red);background:var(--redL);}
+
+/* CAIRAN BOX */
+.cairan-box{background:#F8F6FF;border:1.5px solid #5C35A033;border-radius:10px;padding:12px;margin-bottom:12px;}
+.cairan-title{font-size:11px;font-weight:800;color:var(--purple);margin-bottom:10px;}
+.calc-box{border-radius:8px;padding:10px 14px;}
+.calc-title{font-size:10px;font-weight:800;margin-bottom:4px;}
+.calc-val{font-size:20px;font-weight:800;}
+.calc-sub{font-size:10px;margin-top:3px;font-weight:700;}
+
+/* REKAP */
+#rekap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.rekap-item{background:#ffffff10;border-radius:8px;padding:9px 12px;border:1px solid #ffffff20;}
+.rekap-lbl{font-size:10px;color:#7FB3D3;font-weight:700;margin-bottom:3px;}
+.rekap-val{font-size:14px;font-weight:800;}
+
+/* BUTTONS */
+.btn-submit{width:100%;background:var(--teal);color:#fff;border:none;border-radius:10px;padding:14px;font-size:15px;font-weight:800;cursor:pointer;box-shadow:0 4px 16px #0E7C7B55;margin-bottom:20px;}
+.btn-sm{border:none;border-radius:6px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer;}
+
+/* TAGS */
+.tag{border-radius:4px;padding:1px 7px;font-size:11px;font-weight:700;}
+
+/* DATA LIST */
+.resp-card{background:#fff;border-radius:10px;padding:12px 14px;margin-bottom:8px;box-shadow:0 1px 6px #0001;border:1.5px solid var(--border);}
+.resp-no{width:32px;height:32px;background:var(--navy);border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:12px;}
+.resp-actions{display:flex;flex-direction:column;gap:5px;flex-shrink:0;}
+
+/* PROGRESS */
+.prog-bar{height:7px;background:var(--slateL);border-radius:4px;overflow:hidden;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--green));border-radius:4px;transition:width .3s;}
+
+/* TOAST */
+#toast{position:fixed;top:12px;right:12px;padding:10px 18px;border-radius:8px;font-weight:700;z-index:9999;box-shadow:0 4px 16px #0005;font-size:13px;display:none;}
+
+/* SETUP BANNER */
+#setup-banner{background:#FFF3E6;border:2px solid var(--orange);border-radius:12px;padding:16px 20px;margin-bottom:16px;}
+#setup-banner h3{color:var(--orange);font-size:15px;margin-bottom:8px;}
+#setup-banner p{font-size:13px;color:var(--slate);line-height:1.7;margin-bottom:8px;}
+#setup-banner input{width:100%;border:1.5px solid var(--orange);border-radius:6px;padding:8px 12px;font-size:13px;margin-bottom:8px;}
+#setup-banner button{background:var(--orange);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-weight:800;font-size:13px;cursor:pointer;}
+
+/* IMPORT BANNER */
+#import-banner{background:#E3F2FD;border:2px solid var(--blue);border-radius:12px;padding:16px 20px;margin-bottom:16px;}
+#import-banner h3{color:var(--blue);font-size:15px;margin-bottom:6px;}
+#import-banner p{font-size:13px;color:var(--slate);line-height:1.7;margin-bottom:10px;}
+#import-banner button{background:var(--blue);color:#fff;border:none;border-radius:8px;padding:10px 24px;font-weight:800;font-size:14px;cursor:pointer;}
+
+/* PRINT CSS */
+@media print{
+  #topbar,#toast,.resp-actions,.btn-submit,#setup-banner,#import-banner,.prog-bar{display:none!important;}
+  body{padding-top:0;}
+  .card{box-shadow:none;border:1px solid #ccc;}
+}
+@media(max-width:600px){
+  .grid2,.grid3{grid-template-columns:1fr 1fr;}
+  .grid6{grid-template-columns:repeat(3,1fr);}
+  #rekap-grid{grid-template-columns:1fr 1fr;}
+  .tab-btn{padding:0 8px;font-size:11px;}
+  .top-action{padding:0 8px;font-size:10px;}
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div id="topbar">
+  <div class="logo">
+    <div class="logo-icon">🩺</div>
+    <div>
+      <div class="logo-title">Observasi QB-HD</div>
+      <div class="logo-sub">
+        <div class="dot" id="dot"></div>
+        <span class="logo-status" id="status-txt">Memuat...</span>
+      </div>
+    </div>
+  </div>
+  <button class="tab-btn active" id="tab-form" onclick="switchTab('form')">📝 Input</button>
+  <button class="tab-btn" id="tab-data" onclick="switchTab('data')">📊 Data</button>
+  <button class="top-action" onclick="exportExcel()">⬇ Excel</button>
+  <button class="top-action purple" onclick="printAll()">🖨 Cetak</button>
+</div>
+
+<div id="toast"></div>
+
+<!-- MAIN -->
+<div id="main">
+
+  <!-- SETUP BANNER -->
+  <div id="setup-banner">
+    <h3>⚙️ Setup Google Sheets (sekali saja)</h3>
+    <p>Masukkan <strong>URL Google Apps Script</strong> Anda untuk menyimpan data ke Google Sheets.<br>
+    Panduan lengkap ada di README. Setelah diisi, data otomatis tersimpan ke cloud.</p>
+    <input type="text" id="gscript-url" placeholder="https://script.google.com/macros/s/AKfyc.../exec"/>
+    <button onclick="saveScriptUrl()">✅ Simpan & Hubungkan</button>
+    <div style="margin-top:8px;font-size:11px;color:var(--orange)">
+      💡 Belum punya script URL? <a href="#" onclick="showGuide()" style="color:var(--blue);font-weight:700">Lihat panduan singkat</a>
+    </div>
+  </div>
+
+  <!-- IMPORT BANNER -->
+  <div id="import-banner" style="display:none">
+    <h3>📥 Import 82 Data Responden Lama</h3>
+    <p>Database kosong. Upload 82 responden sekaligus ke Google Sheets?</p>
+    <button onclick="importOldData(true)">✅ Import 82 Responden</button>
+  </div>
+
+  <!-- TAB FORM -->
+  <div id="page-form">
+
+    <!-- EDIT BANNER -->
+    <div id="edit-banner" style="display:none;background:var(--orangeL);border:1.5px solid var(--orange);border-radius:8px;padding:8px 16px;margin-bottom:12px;font-size:13px;display:none;align-items:center;gap:8px;">
+      ✏️ <strong id="edit-label"></strong>
+      <button onclick="cancelEdit()" style="margin-left:auto;background:none;border:1px solid var(--orange);color:var(--orange);cursor:pointer;font-weight:700;border-radius:6px;padding:2px 10px;">✕ Batal</button>
+    </div>
+
+    <!-- A. IDENTITAS -->
+    <div class="card">
+      <div class="sec-header" style="background:var(--blue)"><span>A. IDENTITAS PASIEN</span></div>
+      <div class="grid2">
+        <div>
+          <label class="lbl">No. Rekam Medis <span style="color:var(--red)">*</span></label>
+          <input type="text" id="f_no_rm" placeholder="cth: 2025001" oninput="checkDup()"/>
+          <div id="dup-warn" style="display:none;background:var(--orangeL);border:1.5px solid var(--orange);border-radius:7px;padding:8px 12px;margin-top:6px;font-size:12px;color:var(--orange);line-height:1.7;"></div>
+        </div>
+        <div>
+          <label class="lbl">Usia (tahun)</label>
+          <input type="number" id="f_usia" placeholder="cth: 52"/>
+        </div>
+        <div>
+          <label class="lbl">Jenis Kelamin</label>
+          <div class="radio-group">
+            <div class="radio-opt" id="jk1" onclick="setRadio('jk','1')">Laki-laki</div>
+            <div class="radio-opt" id="jk2" onclick="setRadio('jk','2')">Perempuan</div>
+          </div>
+        </div>
+        <div>
+          <label class="lbl">BB Kering (kg)</label>
+          <input type="number" id="f_bb_kering" placeholder="cth: 58.5" oninput="calcLive()"/>
+        </div>
+        <div>
+          <label class="lbl">Lama HD (tahun)</label>
+          <input type="number" id="f_lama_hd" placeholder="cth: 3.5"/>
+        </div>
+        <div>
+          <label class="lbl">Akses Vaskuler</label>
+          <div class="radio-group">
+            <div class="radio-opt" id="av1" onclick="setRadio('av','1')">AVF</div>
+            <div class="radio-opt" id="av2" onclick="setRadio('av','2')">CVC</div>
+          </div>
+        </div>
+        <div class="full">
+          <label class="lbl">Diisi Oleh (nama perawat)</label>
+          <input type="text" id="f_perawat" placeholder="cth: Ns. Siti"/>
+        </div>
+      </div>
+    </div>
+
+    <!-- B. SESI I -->
+    <div class="card" id="sesi1-card">
+      <div class="sec-header" style="background:var(--green)"><span>B. SESI I</span></div>
+      <div style="margin-bottom:12px">
+        <label class="lbl">Tanggal Sesi I</label>
+        <input type="date" id="f_tgl_s1"/>
+      </div>
+      <div style="margin-bottom:12px">
+        <label class="lbl">QB Aktual (ml/mnt)</label>
+        <div class="grid6" id="qb_s1_grid"></div>
+        <div style="display:flex;gap:8px;margin-top:8px;align-items:center">
+          <span style="font-size:12px;color:var(--muted)">QB Mean otomatis:</span>
+          <div class="af" style="background:#1B7A3E18;border:1.5px dashed #1B7A3E55">
+            <div class="af-lbl" style="color:var(--green)">QB_MEAN_S1</div>
+            <div class="af-val" style="color:var(--green)" id="qb_mean_s1">—</div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-end;margin-bottom:12px">
+        <div style="flex:1">
+          <label class="lbl">Kt/V Akhir (dari mesin/OCM)</label>
+          <input type="number" class="center" id="f_ktv_s1" placeholder="cth: 1.85" oninput="calcLive()"/>
+        </div>
+        <div class="af" id="adeq_s1_box" style="background:#78909C18;border:1.5px dashed #78909C55">
+          <div class="af-lbl" style="color:var(--muted)">Adekuasi</div>
+          <div class="af-val" style="color:var(--muted)" id="adeq_s1">—</div>
+        </div>
+      </div>
+      <!-- Cairan S1 -->
+      <div class="cairan-box">
+        <div class="cairan-title">💧 Parameter Cairan Sesi I</div>
+        <div class="grid3" style="margin-bottom:10px">
+          <div>
+            <label class="lbl">BB Pre HD (kg)</label>
+            <input type="number" class="center" id="f_bb_pre_s1" placeholder="cth: 60" oninput="calcLive()"/>
+          </div>
+          <div>
+            <label class="lbl">UF Volume (ml)</label>
+            <input type="number" class="center" id="f_uf_vol_s1" placeholder="cth: 2000" oninput="calcLive()"/>
+          </div>
+          <div>
+            <label class="lbl">Time Dialisis (mnt)</label>
+            <div class="radio-group" style="margin-top:4px">
+              <div class="radio-opt" id="t1_270" onclick="setRadio('t1','270')">270</div>
+              <div class="radio-opt" id="t1_300" onclick="setRadio('t1','300')">300</div>
+            </div>
+          </div>
+        </div>
+        <div class="grid2">
+          <div class="calc-box" style="background:var(--purpleL);border:2px solid var(--purple)">
+            <div class="calc-title" style="color:var(--purple)">🔁 IDWG = BB Pre − BB Kering</div>
+            <div class="calc-val" id="idwg_s1" style="color:#bbb">—</div>
+            <div class="calc-sub" id="idwg_s1_status"></div>
+          </div>
+          <div class="calc-box" style="background:#E0F2F1;border:2px solid #00695C">
+            <div class="calc-title" style="color:#00695C">🔁 UF Rate = UF Vol ÷ Time</div>
+            <div class="calc-val" id="ufrate_s1" style="color:#bbb">—</div>
+            <div class="calc-sub" id="ufrate_s1_sub" style="color:#00695C"></div>
+          </div>
+        </div>
+      </div>
+      <!-- IDH S1 -->
+      <div>
+        <label class="lbl">IDH — Centang jika TD Sistolik turun ≥20 mmHg</label>
+        <div class="grid6" id="idh_s1_grid"></div>
+        <div style="display:flex;gap:8px;margin-top:8px;align-items:center">
+          <span style="font-size:12px;color:var(--muted)">Episode IDH:</span>
+          <div class="af" style="background:#1B7A3E18;border:1.5px dashed #1B7A3E55">
+            <div class="af-lbl" style="color:var(--green)">EP_IDH_S1</div>
+            <div class="af-val" id="ep_idh_s1" style="color:var(--green)">0 ep</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- C. SESI II -->
+    <div class="card" id="sesi2-card">
+      <div class="sec-header" style="background:var(--blue)"><span>C. SESI II</span></div>
+      <div style="margin-bottom:12px">
+        <label class="lbl">Tanggal Sesi II</label>
+        <input type="date" id="f_tgl_s2"/>
+      </div>
+      <div style="margin-bottom:12px">
+        <label class="lbl">QB Aktual (ml/mnt)</label>
+        <div class="grid6" id="qb_s2_grid"></div>
+        <div style="display:flex;gap:8px;margin-top:8px;align-items:center">
+          <span style="font-size:12px;color:var(--muted)">QB Mean otomatis:</span>
+          <div class="af" style="background:#1565C018;border:1.5px dashed #1565C055">
+            <div class="af-lbl" style="color:var(--blue)">QB_MEAN_S2</div>
+            <div class="af-val" style="color:var(--blue)" id="qb_mean_s2">—</div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-end;margin-bottom:12px">
+        <div style="flex:1">
+          <label class="lbl">Kt/V Akhir (dari mesin/OCM)</label>
+          <input type="number" class="center" id="f_ktv_s2" placeholder="cth: 1.85" oninput="calcLive()"/>
+        </div>
+        <div class="af" id="adeq_s2_box" style="background:#78909C18;border:1.5px dashed #78909C55">
+          <div class="af-lbl" style="color:var(--muted)">Adekuasi</div>
+          <div class="af-val" style="color:var(--muted)" id="adeq_s2">—</div>
+        </div>
+      </div>
+      <!-- Cairan S2 -->
+      <div class="cairan-box">
+        <div class="cairan-title">💧 Parameter Cairan Sesi II</div>
+        <div class="grid3" style="margin-bottom:10px">
+          <div>
+            <label class="lbl">BB Pre HD (kg)</label>
+            <input type="number" class="center" id="f_bb_pre_s2" placeholder="cth: 60" oninput="calcLive()"/>
+          </div>
+          <div>
+            <label class="lbl">UF Volume (ml)</label>
+            <input type="number" class="center" id="f_uf_vol_s2" placeholder="cth: 2000" oninput="calcLive()"/>
+          </div>
+          <div>
+            <label class="lbl">Time Dialisis (mnt)</label>
+            <div class="radio-group" style="margin-top:4px">
+              <div class="radio-opt" id="t2_270" onclick="setRadio('t2','270')">270</div>
+              <div class="radio-opt" id="t2_300" onclick="setRadio('t2','300')">300</div>
+            </div>
+          </div>
+        </div>
+        <div class="grid2">
+          <div class="calc-box" style="background:var(--purpleL);border:2px solid var(--purple)">
+            <div class="calc-title" style="color:var(--purple)">🔁 IDWG = BB Pre − BB Kering</div>
+            <div class="calc-val" id="idwg_s2" style="color:#bbb">—</div>
+            <div class="calc-sub" id="idwg_s2_status"></div>
+          </div>
+          <div class="calc-box" style="background:#E0F2F1;border:2px solid #00695C">
+            <div class="calc-title" style="color:#00695C">🔁 UF Rate = UF Vol ÷ Time</div>
+            <div class="calc-val" id="ufrate_s2" style="color:#bbb">—</div>
+            <div class="calc-sub" id="ufrate_s2_sub" style="color:#00695C"></div>
+          </div>
+        </div>
+      </div>
+      <!-- IDH S2 -->
+      <div>
+        <label class="lbl">IDH — Centang jika TD Sistolik turun ≥20 mmHg</label>
+        <div class="grid6" id="idh_s2_grid"></div>
+        <div style="display:flex;gap:8px;margin-top:8px;align-items:center">
+          <span style="font-size:12px;color:var(--muted)">Episode IDH:</span>
+          <div class="af" style="background:#1565C018;border:1.5px dashed #1565C055">
+            <div class="af-lbl" style="color:var(--blue)">EP_IDH_S2</div>
+            <div class="af-val" id="ep_idh_s2" style="color:var(--blue)">0 ep</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- D. REKAP -->
+    <div class="card" style="background:var(--navy)">
+      <div style="color:#7FB3D3;font-size:11px;font-weight:700;letter-spacing:.8px;margin-bottom:10px">D. REKAPITULASI OTOMATIS → SPSS</div>
+      <div id="rekap-grid">
+        <div class="rekap-item"><div class="rekap-lbl">QB_GABUNGAN</div><div class="rekap-val" id="r_qb" style="color:var(--tealL)">—</div></div>
+        <div class="rekap-item"><div class="rekap-lbl">KTV_GABUNGAN</div><div class="rekap-val" id="r_ktv" style="color:var(--tealL)">—</div></div>
+        <div class="rekap-item"><div class="rekap-lbl">ADEQ_GABUNGAN</div><div class="rekap-val" id="r_adeq" style="color:var(--tealL)">—</div></div>
+        <div class="rekap-item"><div class="rekap-lbl">IDWG_S1</div><div class="rekap-val" id="r_idwg1" style="color:#B39DDB">—</div></div>
+        <div class="rekap-item"><div class="rekap-lbl">IDWG_S2</div><div class="rekap-val" id="r_idwg2" style="color:#B39DDB">—</div></div>
+        <div class="rekap-item"><div class="rekap-lbl">UF_RATE_S1</div><div class="rekap-val" id="r_ufr1" style="color:#80CBC4">—</div></div>
+        <div class="rekap-item"><div class="rekap-lbl">UF_RATE_S2</div><div class="rekap-val" id="r_ufr2" style="color:#80CBC4">—</div></div>
+        <div class="rekap-item"><div class="rekap-lbl">EP_IDH_TOTAL</div><div class="rekap-val" id="r_idh_ep" style="color:var(--tealL)">—</div></div>
+        <div class="rekap-item"><div class="rekap-lbl">IDH_STATUS</div><div class="rekap-val" id="r_idh_st" style="color:var(--tealL)">—</div></div>
+      </div>
+    </div>
+
+    <button class="btn-submit" id="submit-btn" onclick="submitForm()">✅ Simpan Responden</button>
+  </div>
+
+  <!-- TAB DATA -->
+  <div id="page-data" style="display:none">
+    <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">
+      <input type="text" id="search-input" placeholder="🔍 Cari No.RM / perawat..." oninput="renderData()" style="flex:1;min-width:150px;background:#fff"/>
+      <button class="btn-sm" style="background:var(--green);color:#fff" onclick="exportExcel()">⬇ Excel</button>
+      <button class="btn-sm" style="background:#7B1FA2;color:#fff" onclick="printAll()">🖨 Cetak</button>
+    </div>
+    <!-- Progress -->
+    <div class="card" style="padding:12px;margin-bottom:10px">
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:4px">
+        <span>Progress Sampel</span>
+        <span style="font-weight:700;color:var(--teal)" id="prog-label">0/200 (0%)</span>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+      <div style="display:flex;gap:10px;margin-top:6px;font-size:11px;color:var(--muted);flex-wrap:wrap">
+        <span>Adekuat: <strong style="color:var(--green)" id="stat-adeq">0</strong></span>
+        <span>Tdk Adekuat: <strong style="color:var(--red)" id="stat-tdk">0</strong></span>
+        <span>Ada IDH: <strong style="color:var(--red)" id="stat-idh">0</strong></span>
+      </div>
+    </div>
+    <div id="data-list"></div>
+  </div>
+
+</div>
+
+<script>
+// ── CONFIG & STATE ─────────────────────────────────────────────────────────
+const NAMA_PENELITI = "Epi Abdul Wahid / 252FK10057";
+const WAKTU = ["Pre-HD","Jam 1","Jam 2","Jam 3","Jam 4","Post-HD"];
+
+let SCRIPT_URL = localStorage.getItem("gscript_url") || "";
+let records = JSON.parse(localStorage.getItem("hd_records_v1") || "[]");
+let editIdx = null;
+let radios = {jk:"", av:"", t1:"", t2:""};
+let qb_s1 = ["","","","","",""];
+let qb_s2 = ["","","","","",""];
+let idh_s1 = [false,false,false,false,false,false];
+let idh_s2 = [false,false,false,false,false,false];
+let delConfirm = null;
+
+// ── MATH ───────────────────────────────────────────────────────────────────
+const mean = a => { const n=a.map(v=>parseFloat(v)).filter(v=>!isNaN(v)); return n.length?Math.round(n.reduce((x,y)=>x+y,0)/n.length*10)/10:null; };
+const ep   = a => a.filter(Boolean).length;
+const adeq = v => { const n=parseFloat(v); return isNaN(n)?null:n>=1.8?1:0; };
+const gab  = (a,b,d=1) => { const x=parseFloat(a),y=parseFloat(b); return (isNaN(x)||isNaN(y))?null:Math.round((x+y)/2*Math.pow(10,d))/Math.pow(10,d); };
+const calcIDWG   = (pre,ker) => { const p=parseFloat(pre),k=parseFloat(ker); if(isNaN(p)||isNaN(k))return null; return Math.round((p-k)*10)/10; };
+const calcUFRate = (vol,t)   => { const v=parseFloat(vol),tt=parseFloat(t); if(isNaN(v)||isNaN(tt)||tt===0)return null; return Math.round((v/tt)*100)/100; };
+
+// ── INIT ───────────────────────────────────────────────────────────────────
+window.onload = () => {
+  buildQBGrid("s1"); buildQBGrid("s2");
+  buildIDHGrid("s1"); buildIDHGrid("s2");
+  // Auto-load 82 data lama jika localStorage masih kosong
+  if(records.length === 0) {
+    importOldData();
+  }
+  updateSetupBanner();
+  updateStatus();
+  renderData();
+};
+
+function updateSetupBanner() {
+  const banner = document.getElementById("setup-banner");
+  if(SCRIPT_URL) {
+    banner.style.display = "none";
+    // Cek apakah perlu tampil import banner
+    if(records.length === 0) document.getElementById("import-banner").style.display = "block";
+  } else {
+    banner.style.display = "block";
+    document.getElementById("import-banner").style.display = "none";
+  }
+}
+
+function saveScriptUrl() {
+  const url = document.getElementById("gscript-url").value.trim();
+  if(!url.startsWith("https://script.google.com")) { toast("⚠️ URL tidak valid. Harus diawali https://script.google.com","#C25B00"); return; }
+  SCRIPT_URL = url;
+  localStorage.setItem("gscript_url", url);
+  toast("✅ Script URL tersimpan!","#1B7A3E");
+  updateSetupBanner();
+  updateStatus();
+}
+
+function updateStatus() {
+  const dot = document.getElementById("dot");
+  const txt = document.getElementById("status-txt");
+  if(SCRIPT_URL) {
+    dot.style.background = "#4CAF50"; dot.style.boxShadow = "0 0 5px #4CAF50";
+    txt.textContent = `Google Sheets ✓ · ${records.length} resp`;
+  } else {
+    dot.style.background = "#FF9800"; dot.style.boxShadow = "0 0 5px #FF9800";
+    txt.textContent = "Belum terhubung Google Sheets";
+  }
+}
+
+// ── GUIDE ──────────────────────────────────────────────────────────────────
+function showGuide() {
+  alert(`📋 PANDUAN GOOGLE APPS SCRIPT (5 menit)
+
+1. Buka: script.google.com
+2. Klik "+ New project"
+3. Hapus kode yang ada, paste kode berikut:
+
+function doPost(e){
+  var ss=SpreadsheetApp.openById("ID_SHEET_ANDA");
+  var ws=ss.getSheetByName("DATA")||ss.insertSheet("DATA");
+  var d=JSON.parse(e.postData.contents);
+  if(ws.getLastRow()===0) ws.appendRow(Object.keys(d));
+  ws.appendRow(Object.values(d));
+  return ContentService.createTextOutput("OK");
+}
+
+function doGet(e){
+  var ss=SpreadsheetApp.openById("ID_SHEET_ANDA");
+  var ws=ss.getSheetByName("DATA");
+  if(!ws||ws.getLastRow()<2) return ContentService.createTextOutput(JSON.stringify([])).setMimeType(ContentService.MimeType.JSON);
+  var data=ws.getDataRange().getValues();
+  var headers=data[0];
+  var rows=data.slice(1).map(r=>{var o={};headers.forEach((h,i)=>o[h]=r[i]);return o;});
+  return ContentService.createTextOutput(JSON.stringify(rows)).setMimeType(ContentService.MimeType.JSON);
+}
+
+4. Ganti ID_SHEET_ANDA dengan ID Google Sheets Anda
+   (ambil dari URL sheets: .../spreadsheets/d/INI_ID_NYA/edit)
+
+5. Klik Deploy → New deployment → Web app
+   - Execute as: Me
+   - Who has access: Anyone
+6. Copy URL yang muncul → paste di kolom setup aplikasi ini`);
+}
+
+// ── BUILD GRIDS ─────────────────────────────────────────────────────────────
+function buildQBGrid(sesi) {
+  const grid = document.getElementById(`qb_${sesi}_grid`);
+  grid.innerHTML = "";
+  WAKTU.forEach((w,i) => {
+    grid.innerHTML += `<div>
+      <div class="wb-lbl">${w}</div>
+      <input type="number" class="center" id="qb_${sesi}_${i}" placeholder="—"
+        oninput="onQBInput('${sesi}',${i},this.value)" style="font-size:13px;padding:5px 2px"/>
+    </div>`;
+  });
+}
+
+function buildIDHGrid(sesi) {
+  const grid = document.getElementById(`idh_${sesi}_grid`);
+  grid.innerHTML = "";
+  WAKTU.forEach((w,i) => {
+    grid.innerHTML += `<div class="idh-cell">
+      <div class="wb-lbl">${w}</div>
+      <div class="idh-btn" id="idh_${sesi}_${i}" onclick="toggleIDH('${sesi}',${i})">○</div>
+    </div>`;
+  });
+}
+
+// ── INPUTS ─────────────────────────────────────────────────────────────────
+function onQBInput(sesi, i, val) {
+  if(sesi==="s1") qb_s1[i]=val; else qb_s2[i]=val;
+  calcLive();
+}
+
+function toggleIDH(sesi, i) {
+  if(sesi==="s1") idh_s1[i]=!idh_s1[i]; else idh_s2[i]=!idh_s2[i];
+  const el = document.getElementById(`idh_${sesi}_${i}`);
+  const checked = sesi==="s1"?idh_s1[i]:idh_s2[i];
+  el.textContent = checked?"✓":"○";
+  el.className = "idh-btn" + (checked?" checked":"");
+  calcLive();
+}
+
+function setRadio(group, val) {
+  radios[group] = val;
+  // Clear all in group
+  if(group==="jk") { setActive("jk1","active-blue",val==="1"); setActive("jk2","active-blue",val==="2"); }
+  if(group==="av") { setActive("av1","active-teal",val==="1"); setActive("av2","active-teal",val==="2"); }
+  if(group==="t1") { setActive("t1_270","active-purple",val==="270"); setActive("t1_300","active-purple",val==="300"); }
+  if(group==="t2") { setActive("t2_270","active-purple",val==="270"); setActive("t2_300","active-purple",val==="300"); }
+  calcLive();
+}
+
+function setActive(id, cls, on) {
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.classList.remove(cls);
+  if(on) el.classList.add(cls);
+}
+
+// ── LIVE CALC ──────────────────────────────────────────────────────────────
+function calcLive() {
+  const bbKering = document.getElementById("f_bb_kering").value;
+  const ktv1 = document.getElementById("f_ktv_s1").value;
+  const ktv2 = document.getElementById("f_ktv_s2").value;
+  const bbPre1 = document.getElementById("f_bb_pre_s1").value;
+  const bbPre2 = document.getElementById("f_bb_pre_s2").value;
+  const ufVol1 = document.getElementById("f_uf_vol_s1").value;
+  const ufVol2 = document.getElementById("f_uf_vol_s2").value;
+
+  const qm1 = mean(qb_s1), qm2 = mean(qb_s2);
+  const k1 = parseFloat(ktv1)||null, k2 = parseFloat(ktv2)||null;
+  const e1 = ep(idh_s1), e2 = ep(idh_s2);
+  const qg = gab(qm1,qm2,1), kg = gab(k1,k2,2);
+  const idwg1 = calcIDWG(bbPre1,bbKering), idwg2 = calcIDWG(bbPre2,bbKering);
+  const ufr1 = calcUFRate(ufVol1,radios.t1), ufr2 = calcUFRate(ufVol2,radios.t2);
+  const eT = e1+e2;
+  const adeqG = kg!==null?(kg>=1.8?1:0):null;
+
+  // QB Mean
+  setText("qb_mean_s1", qm1!==null?qm1+" ml/mnt":"—");
+  setText("qb_mean_s2", qm2!==null?qm2+" ml/mnt":"—");
+
+  // Adekuasi
+  const a1=adeq(ktv1), a2=adeq(ktv2);
+  setAdeq("adeq_s1","adeq_s1_box",a1);
+  setAdeq("adeq_s2","adeq_s2_box",a2);
+
+  // IDH ep
+  setText("ep_idh_s1", e1+" ep");
+  setText("ep_idh_s2", e2+" ep");
+  document.getElementById("ep_idh_s1").style.color = e1>0?"var(--red)":"var(--green)";
+  document.getElementById("ep_idh_s2").style.color = e2>0?"var(--red)":"var(--blue)";
+
+  // IDWG
+  setIDWG("idwg_s1","idwg_s1_status",idwg1);
+  setIDWG("idwg_s2","idwg_s2_status",idwg2);
+
+  // UF Rate
+  setUFR("ufrate_s1","ufrate_s1_sub",ufr1);
+  setUFR("ufrate_s2","ufrate_s2_sub",ufr2);
+
+  // Rekap
+  setText("r_qb", qg!==null?qg+" ml/mnt":"—");
+  setText("r_ktv", kg!==null?kg:"—");
+  const adeqEl=document.getElementById("r_adeq");
+  adeqEl.textContent=adeqG===null?"—":adeqG===1?"✅ Adekuat":"❌ Tidak";
+  adeqEl.style.color=adeqG===1?"#80CBC4":adeqG===0?"var(--red)":"var(--tealL)";
+  setText("r_idwg1",idwg1!==null?idwg1+" kg":"—");
+  setText("r_idwg2",idwg2!==null?idwg2+" kg":"—");
+  setText("r_ufr1",ufr1!==null?ufr1+" ml/mnt":"—");
+  setText("r_ufr2",ufr2!==null?ufr2+" ml/mnt":"—");
+  setText("r_idh_ep",eT+" ep");
+  const idhStEl=document.getElementById("r_idh_st");
+  idhStEl.textContent=eT>0?"1 = Ada IDH":"0 = Tidak";
+  idhStEl.style.color=eT>0?"var(--red)":"var(--tealL)";
+
+  // Submit btn
+  const n = editIdx!==null?records[editIdx].NO_RESP:records.length+1;
+  document.getElementById("submit-btn").textContent = editIdx!==null?"💾 Simpan Perubahan":`✅ Simpan Responden #${n}`;
+}
+
+function setText(id,val){const el=document.getElementById(id);if(el)el.textContent=val;}
+function setAdeq(valId,boxId,a){
+  const el=document.getElementById(valId),box=document.getElementById(boxId);
+  if(!el||!box)return;
+  if(a===1){el.textContent="✅ Adekuat";el.style.color="var(--green)";box.style.background="var(--greenL)";box.style.border="1.5px dashed #1B7A3E55";}
+  else if(a===0){el.textContent="❌ Tdk Adekuat";el.style.color="var(--red)";box.style.background="var(--redL)";box.style.border="1.5px dashed #B71C1C55";}
+  else{el.textContent="—";el.style.color="var(--muted)";box.style.background="#78909C18";box.style.border="1.5px dashed #78909C55";}
+}
+function setIDWG(valId,subId,v){
+  const el=document.getElementById(valId),sub=document.getElementById(subId);
+  if(!el)return;
+  if(v===null){el.textContent="—";el.style.color="#bbb";if(sub)sub.textContent="";}
+  else{
+    el.textContent=v+" kg";
+    const c=v>3?"var(--red)":v>2?"var(--orange)":"var(--green)";
+    el.style.color=c;
+    if(sub){sub.textContent=v>3?"⚠️ Tinggi":v>2?"⚡ Sedang":"✅ Normal";sub.style.color=c;}
+  }
+}
+function setUFR(valId,subId,v){
+  const el=document.getElementById(valId),sub=document.getElementById(subId);
+  if(!el)return;
+  if(v===null){el.textContent="—";el.style.color="#bbb";if(sub)sub.textContent="";}
+  else{el.textContent=v+" ml/mnt";el.style.color="#00695C";if(sub)sub.textContent=Math.round(v*60)+" ml/jam";}
+}
+
+// ── DUP CHECK ──────────────────────────────────────────────────────────────
+function checkDup() {
+  const val = document.getElementById("f_no_rm").value.trim().toLowerCase();
+  const warn = document.getElementById("dup-warn");
+  if(!val||editIdx!==null){warn.style.display="none";return;}
+  const idx = records.findIndex(r=>r.NO_RM.toLowerCase()===val);
+  if(idx>=0){
+    warn.style.display="block";
+    warn.innerHTML=`⚠️ No. RM <strong>${val}</strong> sudah ada — Resp. #${records[idx].NO_RESP}<br>
+      <button onclick="handleEdit(${idx})" style="background:var(--orange);color:#fff;border:none;border-radius:6px;padding:4px 12px;font-size:12px;font-weight:800;cursor:pointer;margin-top:5px">✏ Edit data ini</button>`;
+  } else {
+    warn.style.display="none";
+  }
+}
+
+// ── SUBMIT ─────────────────────────────────────────────────────────────────
+async function submitForm() {
+  const no_rm = document.getElementById("f_no_rm").value.trim();
+  if(!no_rm){toast("⚠️ No. RM wajib diisi","#C25B00");return;}
+
+  const raw = {
+    no_rm, usia:document.getElementById("f_usia").value,
+    jenis_kel:radios.jk, bb_kering:document.getElementById("f_bb_kering").value,
+    lama_hd:document.getElementById("f_lama_hd").value, akses_vask:radios.av,
+    tgl_s1:document.getElementById("f_tgl_s1").value,
+    tgl_s2:document.getElementById("f_tgl_s2").value,
+    qb_s1:[...qb_s1], qb_s2:[...qb_s2],
+    ktv_s1:document.getElementById("f_ktv_s1").value,
+    ktv_s2:document.getElementById("f_ktv_s2").value,
+    idh_s1:[...idh_s1], idh_s2:[...idh_s2],
+    bb_pre_s1:document.getElementById("f_bb_pre_s1").value,
+    bb_pre_s2:document.getElementById("f_bb_pre_s2").value,
+    uf_vol_s1:document.getElementById("f_uf_vol_s1").value,
+    uf_vol_s2:document.getElementById("f_uf_vol_s2").value,
+    time_s1:radios.t1, time_s2:radios.t2,
+    diisi_oleh:document.getElementById("f_perawat").value,
+  };
+
+  const n = editIdx!==null?records[editIdx].NO_RESP:records.length+1;
+  const rec = deriveRecord(raw, n);
+
+  if(editIdx!==null){
+    records[editIdx]=rec;
+  } else {
+    records.push(rec);
+  }
+  saveLocal();
+
+  // Kirim ke Google Sheets
+  if(SCRIPT_URL){
+    toast("⏳ Menyimpan ke Google Sheets...","#1565C0");
+    try {
+      await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify(flattenForSheets(rec)),mode:"no-cors"});
+      toast("✅ Tersimpan ke Google Sheets!","#1B7A3E");
+    } catch(e){ toast("⚠️ Gagal kirim ke Sheets. Data tersimpan lokal.","#C25B00"); }
+  } else {
+    toast("✅ Tersimpan lokal!","#1B7A3E");
+  }
+
+  cancelEdit();
+  switchTab("data");
+}
+
+function flattenForSheets(r) {
+  return {
+    NO_RESP:r.NO_RESP, NO_RM:r.NO_RM, USIA:r.USIA,
+    JENIS_KEL:r.JENIS_KEL, BB_KERING:r.BB_KERING,
+    LAMA_HD:r.LAMA_HD, AKSES_VASK:r.AKSES_VASK,
+    TGL_SESI1:r.TGL_SESI1, TGL_SESI2:r.TGL_SESI2,
+    QB_S1_MEAN:r.QB_S1_MEAN, QB_S2_MEAN:r.QB_S2_MEAN, QB_GABUNGAN:r.QB_GABUNGAN,
+    KTV_S1_AKH:r.KTV_S1_AKH, KTV_S2_AKH:r.KTV_S2_AKH, KTV_GABUNGAN:r.KTV_GABUNGAN,
+    ADEQ_S1:r.ADEQ_S1, ADEQ_S2:r.ADEQ_S2, ADEQ_GABUNGAN:r.ADEQ_GABUNGAN,
+    BB_PRE_S1:r.BB_PRE_S1, BB_PRE_S2:r.BB_PRE_S2,
+    UF_VOL_S1:r.UF_VOL_S1, UF_VOL_S2:r.UF_VOL_S2,
+    TIME_S1:r.TIME_S1, TIME_S2:r.TIME_S2,
+    IDWG_S1:r.IDWG_S1, IDWG_S2:r.IDWG_S2, IDWG_GABUNGAN:r.IDWG_GABUNGAN,
+    UF_RATE_S1:r.UF_RATE_S1, UF_RATE_S2:r.UF_RATE_S2, UF_RATE_GABUNGAN:r.UF_RATE_GABUNGAN,
+    EP_IDH_S1:r.EP_IDH_S1, EP_IDH_S2:r.EP_IDH_S2, EP_IDH_TOTAL:r.EP_IDH_TOTAL,
+    IDH_STATUS:r.IDH_STATUS, DIISI_OLEH:r.DIISI_OLEH,
+    TIMESTAMP:r._ts,
+  };
+}
+
+function deriveRecord(f, n) {
+  const qm1=mean(f.qb_s1), qm2=mean(f.qb_s2);
+  const k1=parseFloat(f.ktv_s1)||null, k2=parseFloat(f.ktv_s2)||null;
+  const e1=ep(f.idh_s1), e2=ep(f.idh_s2), eT=e1+e2;
+  const qg=gab(qm1,qm2,1), kg=gab(k1,k2,2);
+  const idwg1=calcIDWG(f.bb_pre_s1,f.bb_kering), idwg2=calcIDWG(f.bb_pre_s2,f.bb_kering);
+  const ufr1=calcUFRate(f.uf_vol_s1,f.time_s1), ufr2=calcUFRate(f.uf_vol_s2,f.time_s2);
+  return {
+    NO_RESP:n, NO_RM:f.no_rm, USIA:parseInt(f.usia)||null,
+    JENIS_KEL:f.jenis_kel, BB_KERING:parseFloat(f.bb_kering)||null,
+    LAMA_HD:parseFloat(f.lama_hd)||null, AKSES_VASK:f.akses_vask,
+    TGL_SESI1:f.tgl_s1, TGL_SESI2:f.tgl_s2,
+    QB_S1_MEAN:qm1, QB_S2_MEAN:qm2, QB_GABUNGAN:qg,
+    KTV_S1_AKH:k1, KTV_S2_AKH:k2, KTV_GABUNGAN:kg,
+    ADEQ_S1:adeq(f.ktv_s1), ADEQ_S2:adeq(f.ktv_s2),
+    ADEQ_GABUNGAN:kg!==null?(kg>=1.8?1:0):null,
+    EP_IDH_S1:e1, EP_IDH_S2:e2, EP_IDH_TOTAL:eT, IDH_STATUS:eT>0?1:0,
+    BB_PRE_S1:parseFloat(f.bb_pre_s1)||null, BB_PRE_S2:parseFloat(f.bb_pre_s2)||null,
+    UF_VOL_S1:parseFloat(f.uf_vol_s1)||null, UF_VOL_S2:parseFloat(f.uf_vol_s2)||null,
+    TIME_S1:parseFloat(f.time_s1)||null, TIME_S2:parseFloat(f.time_s2)||null,
+    IDWG_S1:idwg1, IDWG_S2:idwg2,
+    IDWG_GABUNGAN:(idwg1!==null&&idwg2!==null)?Math.round((idwg1+idwg2)/2*10)/10:null,
+    UF_RATE_S1:ufr1, UF_RATE_S2:ufr2,
+    UF_RATE_GABUNGAN:(ufr1!==null&&ufr2!==null)?Math.round((ufr1+ufr2)/2*100)/100:null,
+    DIISI_OLEH:f.diisi_oleh, NAMA_PENELITI:NAMA_PENELITI,
+    _raw:f, _ts:new Date().toISOString(),
+  };
+}
+
+function saveLocal() {
+  localStorage.setItem("hd_records_v1", JSON.stringify(records));
+  updateStatus(); renderData();
+}
+
+// ── EDIT / DELETE ──────────────────────────────────────────────────────────
+function handleEdit(i) {
+  editIdx = i;
+  const r = records[i];
+  const f = r._raw || {};
+  switchTab("form");
+
+  document.getElementById("f_no_rm").value = r.NO_RM||"";
+  document.getElementById("f_usia").value = r.USIA||"";
+  document.getElementById("f_bb_kering").value = r.BB_KERING||"";
+  document.getElementById("f_lama_hd").value = r.LAMA_HD||"";
+  document.getElementById("f_perawat").value = r.DIISI_OLEH||"";
+  document.getElementById("f_tgl_s1").value = r.TGL_SESI1||"";
+  document.getElementById("f_tgl_s2").value = r.TGL_SESI2||"";
+  document.getElementById("f_ktv_s1").value = r.KTV_S1_AKH||"";
+  document.getElementById("f_ktv_s2").value = r.KTV_S2_AKH||"";
+  document.getElementById("f_bb_pre_s1").value = r.BB_PRE_S1||"";
+  document.getElementById("f_bb_pre_s2").value = r.BB_PRE_S2||"";
+  document.getElementById("f_uf_vol_s1").value = r.UF_VOL_S1||"";
+  document.getElementById("f_uf_vol_s2").value = r.UF_VOL_S2||"";
+
+  radios = {jk:r.JENIS_KEL||"", av:r.AKSES_VASK||"", t1:String(r.TIME_S1||""), t2:String(r.TIME_S2||"")};
+  if(radios.jk) setRadio("jk",radios.jk);
+  if(radios.av) setRadio("av",radios.av);
+  if(radios.t1) setRadio("t1",radios.t1);
+  if(radios.t2) setRadio("t2",radios.t2);
+
+  qb_s1 = f.qb_s1 ? [...f.qb_s1] : ["","","","","",""];
+  qb_s2 = f.qb_s2 ? [...f.qb_s2] : ["","","","","",""];
+  idh_s1 = f.idh_s1 ? [...f.idh_s1] : [false,false,false,false,false,false];
+  idh_s2 = f.idh_s2 ? [...f.idh_s2] : [false,false,false,false,false,false];
+
+  // Rebuild grids
+  buildQBGrid("s1"); buildQBGrid("s2");
+  buildIDHGrid("s1"); buildIDHGrid("s2");
+  qb_s1.forEach((v,i)=>{const el=document.getElementById(`qb_s1_${i}`);if(el)el.value=v;});
+  qb_s2.forEach((v,i)=>{const el=document.getElementById(`qb_s2_${i}`);if(el)el.value=v;});
+  idh_s1.forEach((v,i)=>{if(v) toggleIDHDirect("s1",i,true);});
+  idh_s2.forEach((v,i)=>{if(v) toggleIDHDirect("s2",i,true);});
+
+  const eb = document.getElementById("edit-banner");
+  eb.style.display="flex";
+  document.getElementById("edit-label").textContent=`Edit Resp. #${r.NO_RESP} — RM: ${r.NO_RM}`;
+  calcLive(); window.scrollTo(0,0);
+}
+
+function toggleIDHDirect(sesi,i,val){
+  if(sesi==="s1")idh_s1[i]=val;else idh_s2[i]=val;
+  const el=document.getElementById(`idh_${sesi}_${i}`);
+  if(el){el.textContent=val?"✓":"○";el.className="idh-btn"+(val?" checked":"");}
+}
+
+function cancelEdit() {
+  editIdx=null;
+  radios={jk:"",av:"",t1:"",t2:""};
+  qb_s1=["","","","","",""];qb_s2=["","","","","",""];
+  idh_s1=[false,false,false,false,false,false];idh_s2=[false,false,false,false,false,false];
+  ["f_no_rm","f_usia","f_bb_kering","f_lama_hd","f_perawat","f_tgl_s1","f_tgl_s2","f_ktv_s1","f_ktv_s2","f_bb_pre_s1","f_bb_pre_s2","f_uf_vol_s1","f_uf_vol_s2"].forEach(id=>{const el=document.getElementById(id);if(el)el.value="";});
+  buildQBGrid("s1");buildQBGrid("s2");buildIDHGrid("s1");buildIDHGrid("s2");
+  document.getElementById("edit-banner").style.display="none";
+  document.getElementById("dup-warn").style.display="none";
+  calcLive();
+}
+
+function handleDelete(i) {
+  records.splice(i,1);
+  records.forEach((r,j)=>r.NO_RESP=j+1);
+  saveLocal();
+  delConfirm=null; renderData();
+  toast("🗑 Data dihapus","#37474F");
+}
+
+// ── RENDER DATA ────────────────────────────────────────────────────────────
+function renderData() {
+  const search = (document.getElementById("search-input")||{}).value||"";
+  const filtered = records.filter(r=>!search||[r.NO_RM,String(r.NO_RESP),r.DIISI_OLEH||""].some(v=>v.toLowerCase().includes(search.toLowerCase())));
+  const list = document.getElementById("data-list");
+  if(!list) return;
+
+  // Stats
+  const pct = Math.round(records.length/200*100);
+  setText("prog-label",`${records.length}/200 (${pct}%)`);
+  const fill = document.getElementById("prog-fill");
+  if(fill) fill.style.width=Math.min(pct,100)+"%";
+  setText("stat-adeq", records.filter(r=>r.ADEQ_GABUNGAN===1).length);
+  setText("stat-tdk",  records.filter(r=>r.ADEQ_GABUNGAN===0).length);
+  setText("stat-idh",  records.filter(r=>r.IDH_STATUS===1).length);
+
+  if(!filtered.length){list.innerHTML=`<div style="text-align:center;padding:50px;color:var(--muted)">${records.length===0?"Belum ada data.":"Tidak ditemukan."}</div>`;return;}
+
+  list.innerHTML = filtered.map((r,fi)=>{
+    const i = records.indexOf(r);
+    const s2miss = !r.QB_S2_MEAN&&!r.KTV_S2_AKH;
+    const miss=[];
+    if(!r.BB_PRE_S1)miss.push("BB Pre S1");
+    if(!r.UF_VOL_S1)miss.push("UF Vol S1");
+    if(!r.TIME_S1)  miss.push("Time S1");
+    if(r.TGL_SESI2||r.QB_S2_MEAN||r.KTV_S2_AKH){
+      if(!r.BB_PRE_S2)miss.push("BB Pre S2");
+      if(!r.UF_VOL_S2)miss.push("UF Vol S2");
+      if(!r.TIME_S2)  miss.push("Time S2");
+    }
+    const border=miss.length>0?"var(--red)":s2miss?"var(--orange)":"var(--border)";
+    const nbg=miss.length>0?"var(--red)":"var(--navy)";
+    return `<div class="resp-card" style="border-color:${border}">
+  <div style="display:flex;align-items:flex-start;gap:10px">
+    <div class="resp-no" style="background:${nbg}">${r.NO_RESP}</div>
+    <div style="flex:1;min-width:0">
+      <div style="font-weight:700;font-size:13px;display:flex;gap:6px;flex-wrap:wrap;align-items:center">
+        RM: ${r.NO_RM}
+        ${s2miss?`<span class="tag" style="background:#C25B0022;color:var(--orange);border:1px solid #C25B0044">⚠ Sesi II belum diisi</span>`:""}
+        ${r.DIISI_OLEH?`<span style="color:var(--muted);font-weight:400;font-size:11px">· ${r.DIISI_OLEH}</span>`:""}
+      </div>
+      <div style="font-size:11px;color:var(--muted);margin:2px 0 5px">
+        ${r.USIA?r.USIA+"th":""} · ${r.JENIS_KEL==="1"?"L":"P"} · ${r.AKSES_VASK==="1"?"AVF":"CVC"}
+        ${r.TGL_SESI1?" · S1:"+r.TGL_SESI1:""}${r.TGL_SESI2?" · S2:"+r.TGL_SESI2:""}
+      </div>
+      ${miss.length>0?`<div style="background:var(--redL);border:1.5px solid var(--red);border-radius:8px;padding:5px 10px;margin-bottom:6px">
+        <span style="font-size:11px;font-weight:800;color:var(--red)">⚠️ Belum lengkap: </span>
+        ${miss.map(m=>`<span style="background:var(--redL);color:var(--red);border-radius:4px;padding:1px 6px;font-size:10px;font-weight:700;margin-left:3px">${m}</span>`).join("")}
+      </div>`:""}
+      <div style="display:flex;flex-wrap:wrap;gap:5px">
+        <span class="tag" style="background:#0E7C7B22;color:var(--teal);border:1px solid #0E7C7B44">QB: ${r.QB_GABUNGAN??"-"} ml/mnt</span>
+        <span class="tag" style="background:${(r.KTV_GABUNGAN>=1.8?"#1B7A3E":"#C25B00")}22;color:${r.KTV_GABUNGAN>=1.8?"var(--green)":"var(--orange)"};border:1px solid ${r.KTV_GABUNGAN>=1.8?"#1B7A3E":"#C25B00"}44">Kt/V: ${r.KTV_GABUNGAN??"-"}</span>
+        <span class="tag" style="background:${r.ADEQ_GABUNGAN===1?"#1B7A3E":"#B71C1C"}22;color:${r.ADEQ_GABUNGAN===1?"var(--green)":"var(--red)"};border:1px solid ${r.ADEQ_GABUNGAN===1?"#1B7A3E":"#B71C1C"}44">${r.ADEQ_GABUNGAN===1?"✅ Adekuat":"❌ Tdk Adekuat"}</span>
+        <span class="tag" style="background:${r.IDH_STATUS===1?"#B71C1C":"#37474F"}22;color:${r.IDH_STATUS===1?"var(--red)":"var(--slate)"};border:1px solid ${r.IDH_STATUS===1?"#B71C1C":"#37474F"}44">IDH: ${r.IDH_STATUS===1?"Ada":"Tidak"} (${r.EP_IDH_TOTAL}ep)</span>
+        ${r.IDWG_GABUNGAN!==null?`<span class="tag" style="background:#5C35A022;color:var(--purple);border:1px solid #5C35A044">IDWG: ${r.IDWG_GABUNGAN}kg</span>`:""}
+        ${r.UF_RATE_GABUNGAN!==null?`<span class="tag" style="background:#00695C22;color:#00695C;border:1px solid #00695C44">UF Rate: ${r.UF_RATE_GABUNGAN}ml/mnt</span>`:""}
+      </div>
+    </div>
+    <div class="resp-actions">
+      <button class="btn-sm" style="background:#F3E5F5;color:#7B1FA2;border:1px solid #CE93D8" onclick="printOne(${i})">🖨 Cetak</button>
+      <button class="btn-sm" style="background:var(--blueL);color:var(--blue);border:1px solid #1565C044" onclick="handleEdit(${i})">✏️ Edit</button>
+      ${delConfirm===i
+        ?`<button class="btn-sm" style="background:var(--red);color:#fff" onclick="handleDelete(${i})">Ya, Hapus</button>
+           <button class="btn-sm" style="background:var(--slateL);color:var(--slate)" onclick="delConfirm=null;renderData()">Batal</button>`
+        :`<button class="btn-sm" style="background:var(--redL);color:var(--red);border:1px solid #B71C1C44" onclick="delConfirm=${i};renderData()">🗑</button>`
+      }
+    </div>
+  </div>
+</div>`;
+  }).join("");
+}
+
+// ── PRINT ──────────────────────────────────────────────────────────────────
+function buildPrintHTML(recs) {
+  const css=`*{margin:0;padding:0;box-sizing:border-box;}body{font-family:Arial,sans-serif;font-size:11px;background:#fff;}.page{width:190mm;margin:0 auto;padding:9mm 11mm;page-break-after:always;}.page:last-child{page-break-after:auto;}.kop{display:flex;justify-content:space-between;border-top:3px solid #111;border-bottom:1.5px solid #111;padding:6px 0 7px;margin-bottom:9px;}.kop-title{font-size:13px;font-weight:700;text-transform:uppercase;}.kop-subtitle{font-size:9.5px;color:#444;line-height:1.6;}.kop-badge{text-align:right;border:1px solid #999;border-radius:4px;padding:5px 11px;}.badge-no{font-size:24px;font-weight:700;}.sec{font-size:11px;font-weight:700;padding:3px 0;margin-bottom:3px;border-bottom:1.5px solid #444;}.tbl{width:100%;border-collapse:collapse;font-size:10.5px;}.tbl th{border:1px solid #999;padding:3px 5px;font-weight:700;text-align:center;font-size:10px;}.tbl td{border:1px solid #bbb;padding:3px 5px;text-align:center;}.rl{text-align:left!important;font-weight:700;background:#f7f7f7;}.vb{font-weight:700;}.ok{color:#1a5c2e;font-weight:700;}.no{color:#7a1010;font-weight:700;}.ttd-row{display:flex;gap:40px;margin-top:14px;padding-top:10px;border-top:1px solid #ccc;}.ttd-box{flex:1;text-align:center;}.ttd-blank{height:55px;}.ttd-nama{font-size:11px;font-weight:700;border-top:1px solid #555;display:inline-block;padding-top:4px;min-width:150px;}.footer{margin-top:8px;border-top:1px solid #ddd;display:flex;justify-content:space-between;font-size:9px;color:#999;padding-top:4px;}.toolbar{position:fixed;top:0;left:0;right:0;background:#1a1a1a;padding:10px 16px;display:flex;gap:10px;align-items:center;z-index:999;}body{padding-top:50px;}@media print{.toolbar{display:none!important;}body{padding-top:0;}}`;
+  const WKTU=["Pre-HD","Jam 1","Jam 2","Jam 3","Jam 4","Post-HD"];
+  const pages=recs.map(r=>{
+    const f=r._raw||{};
+    const jkL=r.JENIS_KEL==="1"?"Laki-laki":r.JENIS_KEL==="2"?"Perempuan":"—";
+    const aksL=r.AKSES_VASK==="1"?"AVF":r.AKSES_VASK==="2"?"CVC":"—";
+    const aL=v=>v===1?"Adekuat":v===0?"Tidak Adekuat":"—";
+    const qbR=a=>a.map(v=>`<td>${v||"—"}</td>`).join("");
+    const idhR=a=>a.map(v=>`<td>${v?"✓":"—"}</td>`).join("");
+    return `<div class="page">
+<div class="kop"><div><div class="kop-title">LEMBAR OBSERVASI PENELITIAN</div><div class="kop-subtitle">Analisis QB terhadap Adekuasi (Kt/V) dan Stabilitas Hemodinamik</div><div class="kop-subtitle">Instalasi Hemodialisa RSUD Welas Asih Provinsi Jawa Barat</div></div><div class="kop-badge"><div style="font-size:8.5px;color:#777">Responden</div><div class="badge-no">#${r.NO_RESP}</div><div style="font-size:9.5px;color:#555">RM: ${r.NO_RM}</div></div></div>
+<div class="sec">A. Identitas</div>
+<table class="tbl"><tbody>
+<tr><td class="rl" style="width:12%">Usia</td><td>${r.USIA?r.USIA+" thn":"—"}</td><td class="rl">Jenis Kelamin</td><td>${jkL}</td><td class="rl">Akses Vasc.</td><td>${aksL}</td></tr>
+<tr><td class="rl">BB Kering</td><td>${r.BB_KERING?r.BB_KERING+" kg":"—"}</td><td class="rl">Lama HD</td><td>${r.LAMA_HD?r.LAMA_HD+" thn":"—"}</td><td class="rl">Diisi Oleh</td><td>${r.DIISI_OLEH||"—"}</td></tr>
+</tbody></table>
+<div class="sec" style="margin-top:7px">B. Sesi I — ${r.TGL_SESI1||"___"}</div>
+<table class="tbl"><thead><tr><th>QB (ml/mnt)</th>${WKTU.map(w=>`<th>${w}</th>`).join("")}<th>Mean</th></tr></thead><tbody><tr><td class="rl">QB Aktual</td>${qbR(f.qb_s1||[])}<td class="vb">${r.QB_S1_MEAN??'—'}</td></tr></tbody></table>
+<table class="tbl" style="margin-top:3px"><thead><tr><th>Kt/V Sesi I</th><th>Nilai</th><th>Target</th><th>Adekuasi</th></tr></thead><tbody><tr><td class="rl">Kt/V Akhir</td><td class="vb">${r.KTV_S1_AKH??'—'}</td><td style="color:#888;font-style:italic">≥1.8</td><td class="${r.ADEQ_S1===1?'ok':'no'}">${aL(r.ADEQ_S1)}</td></tr></tbody></table>
+<table class="tbl" style="margin-top:3px"><thead><tr><th>Cairan Sesi I</th><th>BB Pre (kg)</th><th>UF Vol (ml)</th><th>Time (mnt)</th><th>IDWG (kg)</th><th>UF Rate (ml/mnt)</th></tr></thead><tbody><tr><td class="rl">Nilai</td><td>${r.BB_PRE_S1??'—'}</td><td>${r.UF_VOL_S1??'—'}</td><td>${r.TIME_S1??'—'}</td><td class="vb">${r.IDWG_S1??'—'}</td><td class="vb">${r.UF_RATE_S1??'—'}</td></tr></tbody></table>
+<table class="tbl" style="margin-top:3px"><thead><tr><th>IDH Sesi I</th>${WKTU.map(w=>`<th>${w}</th>`).join("")}<th>Total</th></tr></thead><tbody><tr><td class="rl">Episode</td>${idhR(f.idh_s1||[])}<td class="vb">${r.EP_IDH_S1} ep</td></tr></tbody></table>
+<div class="sec" style="margin-top:7px">C. Sesi II — ${r.TGL_SESI2||"___"}</div>
+<table class="tbl"><thead><tr><th>QB (ml/mnt)</th>${WKTU.map(w=>`<th>${w}</th>`).join("")}<th>Mean</th></tr></thead><tbody><tr><td class="rl">QB Aktual</td>${qbR(f.qb_s2||[])}<td class="vb">${r.QB_S2_MEAN??'—'}</td></tr></tbody></table>
+<table class="tbl" style="margin-top:3px"><thead><tr><th>Kt/V Sesi II</th><th>Nilai</th><th>Target</th><th>Adekuasi</th></tr></thead><tbody><tr><td class="rl">Kt/V Akhir</td><td class="vb">${r.KTV_S2_AKH??'—'}</td><td style="color:#888;font-style:italic">≥1.8</td><td class="${r.ADEQ_S2===1?'ok':'no'}">${aL(r.ADEQ_S2)}</td></tr></tbody></table>
+<table class="tbl" style="margin-top:3px"><thead><tr><th>Cairan Sesi II</th><th>BB Pre (kg)</th><th>UF Vol (ml)</th><th>Time (mnt)</th><th>IDWG (kg)</th><th>UF Rate (ml/mnt)</th></tr></thead><tbody><tr><td class="rl">Nilai</td><td>${r.BB_PRE_S2??'—'}</td><td>${r.UF_VOL_S2??'—'}</td><td>${r.TIME_S2??'—'}</td><td class="vb">${r.IDWG_S2??'—'}</td><td class="vb">${r.UF_RATE_S2??'—'}</td></tr></tbody></table>
+<table class="tbl" style="margin-top:3px"><thead><tr><th>IDH Sesi II</th>${WKTU.map(w=>`<th>${w}</th>`).join("")}<th>Total</th></tr></thead><tbody><tr><td class="rl">Episode</td>${idhR(f.idh_s2||[])}<td class="vb">${r.EP_IDH_S2} ep</td></tr></tbody></table>
+<div class="sec" style="margin-top:7px">D. Rekapitulasi SPSS</div>
+<table class="tbl"><thead><tr><th style="width:30%">Variabel</th><th>Sesi I</th><th>Sesi II</th><th>Gabungan</th></tr></thead><tbody>
+<tr><td class="rl">QB Mean (ml/mnt)</td><td>${r.QB_S1_MEAN??'—'}</td><td>${r.QB_S2_MEAN??'—'}</td><td class="vb">${r.QB_GABUNGAN??'—'}</td></tr>
+<tr><td class="rl">Kt/V Akhir</td><td>${r.KTV_S1_AKH??'—'}</td><td>${r.KTV_S2_AKH??'—'}</td><td class="vb">${r.KTV_GABUNGAN??'—'}</td></tr>
+<tr><td class="rl">ADEQ (0/1)</td><td class="${r.ADEQ_S1===1?'ok':'no'}">${r.ADEQ_S1??'—'}</td><td class="${r.ADEQ_S2===1?'ok':'no'}">${r.ADEQ_S2??'—'}</td><td class="vb ${r.ADEQ_GABUNGAN===1?'ok':'no'}">${r.ADEQ_GABUNGAN===1?'1=Adekuat':'0=Tidak'}</td></tr>
+<tr><td class="rl">IDWG (kg)</td><td>${r.IDWG_S1??'—'}</td><td>${r.IDWG_S2??'—'}</td><td class="vb">${r.IDWG_GABUNGAN??'—'}</td></tr>
+<tr><td class="rl">UF Rate (ml/mnt)</td><td>${r.UF_RATE_S1??'—'}</td><td>${r.UF_RATE_S2??'—'}</td><td class="vb">${r.UF_RATE_GABUNGAN??'—'}</td></tr>
+<tr><td class="rl">Ep. IDH</td><td>${r.EP_IDH_S1}</td><td>${r.EP_IDH_S2}</td><td class="vb">${r.EP_IDH_TOTAL} ep</td></tr>
+<tr><td class="rl">IDH Status</td><td colspan="2" class="${r.IDH_STATUS===1?'no':'ok'}">${r.IDH_STATUS===1?'Ada':'Tidak'}</td><td class="vb ${r.IDH_STATUS===1?'no':'ok'}">${r.IDH_STATUS===1?'1=Ada':'0=Tidak'}</td></tr>
+</tbody></table>
+<div class="ttd-row">
+  <div class="ttd-box"><div style="font-size:10.5px;margin-bottom:8px">Pengkaji / Peneliti,</div><div class="ttd-blank"></div><div class="ttd-nama">${NAMA_PENELITI}</div></div>
+  <div class="ttd-box"><div style="font-size:10.5px;margin-bottom:8px">Perawat HD yang Bertugas,</div><div class="ttd-blank"></div><div class="ttd-nama">${r.DIISI_OLEH||""}</div></div>
+</div>
+<div class="footer"><span>Dicetak: ${new Date().toLocaleString("id-ID")}</span><span>HD RSUD Welas Asih · Resp.#${r.NO_RESP}</span></div>
+</div>`;
+  }).join("");
+  return `<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"/><title>Lembar Observasi QB-HD</title><style>${css}</style></head><body>
+<div class="toolbar"><span style="color:#fff;font-weight:700;flex:1">Lembar Observasi — ${recs.length} Responden</span><button style="background:#1B7A3E;color:#fff;border:none;border-radius:5px;padding:8px 16px;font-weight:700;cursor:pointer" onclick="window.print()">🖨 Cetak / PDF</button></div>
+${pages}</body></html>`;
+}
+
+function printOne(i){ dlHTML(buildPrintHTML([records[i]]),`Resp${records[i].NO_RESP}_RM${records[i].NO_RM}.html`); }
+function printAll(){ if(!records.length){toast("Belum ada data","#C25B00");return;} dlHTML(buildPrintHTML(records),`LembarObservasi_${records.length}resp.html`); }
+function dlHTML(html,fname){
+  const b=new Blob([html],{type:"text/html;charset=utf-8"});
+  const u=URL.createObjectURL(b),a=document.createElement("a");
+  a.href=u;a.download=fname;document.body.appendChild(a);a.click();
+  document.body.removeChild(a);setTimeout(()=>URL.revokeObjectURL(u),3000);
+  toast("✅ File HTML tersimpan! Buka di browser → Cetak/PDF","#7B1FA2");
+}
+
+// ── EXCEL ──────────────────────────────────────────────────────────────────
+function exportExcel(){
+  if(!records.length){toast("Belum ada data","#C25B00");return;}
+  const cols=["NO_RESP","NO_RM","USIA","JENIS_KEL","BB_KERING","LAMA_HD","AKSES_VASK","TGL_SESI1","TGL_SESI2","QB_S1_MEAN","QB_S2_MEAN","QB_GABUNGAN","KTV_S1_AKH","KTV_S2_AKH","KTV_GABUNGAN","ADEQ_S1","ADEQ_S2","ADEQ_GABUNGAN","BB_PRE_S1","BB_PRE_S2","UF_VOL_S1","UF_VOL_S2","TIME_S1","TIME_S2","IDWG_S1","IDWG_S2","IDWG_GABUNGAN","UF_RATE_S1","UF_RATE_S2","UF_RATE_GABUNGAN","EP_IDH_S1","EP_IDH_S2","EP_IDH_TOTAL","IDH_STATUS","DIISI_OLEH"];
+  const rows=[cols,...records.map(r=>cols.map(c=>r[c]??''))];
+  let csv=rows.map(r=>r.map(v=>'"'+(String(v??'').replace(/"/g,'""'))+'"').join(",")).join("\n");
+  const b=new Blob(["\uFEFF"+csv],{type:"text/csv;charset=utf-8"});
+  const u=URL.createObjectURL(b),a=document.createElement("a");
+  a.href=u;a.download=`DB_QB_HD_${records.length}resp.csv`;
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  setTimeout(()=>URL.revokeObjectURL(u),3000);
+  toast("✅ CSV tersimpan! Buka di Excel","#1B7A3E");
+}
+
+// ── IMPORT 82 DATA ──────────────────────────────────────────────────────────
+async function importOldData(manual=false){
+  const OLD=[
+    [1,"01007335",41,2,72.5,1.9,1,"2026-06-08","2026-06-11",300,300,1.96,1.85,0,0,"AGUSTINI ROKHMAH, AMK"],
+    [2,"00815647",72,1,69,3.5,1,"2026-06-08","2026-06-11",350,350,1.81,1.8,0,0,"EPI ABDUL WAHID, AMK"],
+    [3,"00833466",47,1,63,4.1,1,"2026-06-08","2026-06-11",380,362.5,1.89,1.85,0,0,"TITA SETIAWATI, A.MD.KEP"],
+    [4,"01037458",56,1,62,0.8,1,"2026-06-08","2026-06-11",300,380,1.48,1.68,0,0,"Hamdan Amd. Kep"],
+    [5,"01003673",26,1,63.5,1.4,1,"2026-06-08","2026-06-11",400,400,1.64,1.8,0,0,"EDEN TARMANSYAH"],
+    [6,"00741614",25,2,31.5,5.1,1,"2026-06-08","2026-06-11",257.5,250,1.96,1.9,1,0,"HOLISOH, AMK"],
+    [7,"00567322",67,1,52,6.3,1,"2026-06-08","2026-06-11",350,350,2.13,2.14,0,0,"TITA SETIAWATI, A.MD.KEP"],
+    [8,"00928119",53,1,64,0.8,1,"2026-06-08","2026-06-11",357.5,380,1.72,1.8,1,0,"EPI ABDUL WAHID, AMK"],
+    [9,"00957733",64,2,52.5,2.1,1,"2026-06-08","2026-06-11",300,300,1.95,1.9,0,0,"Mohamad Falah Akbar Amd. Kep"],
+    [10,"00190233",54,1,59.5,3.9,1,"2026-06-08","2026-06-11",350,400,1.8,1.94,0,0,"EDEN TARMANSYAH"],
+    [11,"00852365",46,1,46.5,2.7,1,"2026-06-08","2026-06-11",350,350,2.14,2,0,0,"EDEN TARMANSYAH"],
+    [12,"00397501",32,2,58.5,13,1,"2026-06-08","2026-06-11",325,300,1.76,1.82,1,0,"EPI ABDUL WAHID, AMK"],
+    [13,"00845769",61,2,49,2,1,"2026-06-08","2026-06-11",300,300,2,2.2,0,0,"AGUSTINI ROKHMAH, AMK"],
+    [14,"00988747",36,2,54.5,1.4,1,"2026-06-08","2026-06-11",300,320,2.13,2,0,0,"Mohamad Falah Akbar Amd. Kep"],
+    [15,"00831264",48,2,54,2,1,"2026-06-08","2026-06-11",300,300,2.08,2,0,0,"AGUSTINI ROKHMAH, AMK"],
+    [16,"00826391",32,1,54.5,4.1,1,"2026-06-08","2026-06-11",400,400,1.9,1.9,0,0,"HOLISOH, AMK"],
+    [17,"00378065",61,1,64,2.2,1,"2026-06-08","2026-06-11",400,385,1.84,1.8,0,0,"Hamdan Amd. Kep"],
+    [18,"00705681",42,2,48,7,1,"2026-06-08","2026-06-11",287.5,275,1.97,1.99,0,0,"Mohamad Falah Akbar Amd. Kep"],
+    [19,"00813066",32,1,67.5,4.5,1,"2026-06-08","2026-06-11",380,380,1.82,1.8,0,0,"TITA SETIAWATI, A.MD.KEP"],
+    [20,"00881212",45,1,43,3.2,1,"2026-06-08","2026-06-11",337.5,372.5,1.85,1.9,0,0,"TITA SETIAWATI, A.MD.KEP"],
+    [21,"00983343",53,1,57,0.6,1,"2026-06-08","2026-06-11",350,357.5,1.9,1.9,0,0,"ALIMUDIN, AMK"],
+    [22,"00556083",47,1,67.5,9,1,"2026-06-08","2026-06-11",365,350,2,1.94,0,0,"HANI HANANIYAH, S.KEP.,NERS"],
+    [23,"00823014",46,2,54,3.1,1,"2026-06-08","2026-06-11",350,300,2,1.9,0,0,"SHANDI ADHI SUTISNA"],
+    [24,"00495983",43,2,66,9,1,"2026-06-08","2026-06-11",320,337.5,2.08,2.1,0,1,"RITA SAPITA"],
+    [25,"00994089",48,2,48,1.5,1,"2026-06-08","2026-06-11",305,300,2.08,1.9,0,0,"Hamdan Amd. Kep"],
+    [26,"00808356",32,1,68.5,4.6,1,"2026-06-08","2026-06-11",387.5,350,1.94,1.81,0,0,"LIA YULIANI ENDAH"],
+    [27,"00503852",52,2,70,3.7,1,"2026-06-08","2026-06-11",275,350,1.69,1.84,0,0,"HANI HANANIYAH, S.KEP.,NERS"],
+    [28,"00086433",49,2,74,6.5,1,"2026-06-08","2026-06-11",350,350,1.9,1.9,0,0,"AKHMAD TAUFIK, AMK"],
+    [29,"00566626",70,1,62,4,1,"2026-06-08","2026-06-11",380,350,1.8,1.76,0,0,"AKHMAD TAUFIK, AMK"],
+    [30,"00797629",39,2,50,4.8,1,"2026-06-08","2026-06-11",300,300,2.1,2.2,0,0,"RITA SAPITA"],
+    [31,"01020277",50,2,42.5,1,1,"2026-06-08","2026-06-11",280,250,2,1.85,0,1,"SHANDI ADHI SUTISNA"],
+    [32,"00740089",51,2,50,4,1,"2026-06-08","2026-06-11",275,300,2,2.05,0,0,""],
+    [33,"00461693",50,2,49.5,9,1,"2026-06-08","2026-06-11",300,300,2.19,2.2,0,0,"RITA SAPITA"],
+    [34,"00669001",68,1,55,2.6,1,"2026-06-08","2026-06-11",300,300,1.9,1.9,0,0,"Rizki Indah Amalia Amd.Kep"],
+    [35,"00821279",34,2,42.5,2.5,1,"2026-06-08","2026-06-11",187.5,300,1.9,2.12,0,0,"IRMA HERMAYANTI, AMD KEP"],
+    [36,"00276393",56,1,56,2.6,1,"2026-06-08","2026-06-11",350,350,2,2.1,0,0,"Rizki Indah Amalia Amd.Kep"],
+    [37,"00870180",40,1,58.5,3,1,"2026-06-08","2026-06-11",350,350,1.95,1.9,0,0,"Alfi Nurgiawan Amd. Kep"],
+    [38,"00798611",52,1,69.5,1,1,"2026-06-08","2026-06-11",365,350,1.8,1.7,0,0,"LIA YULIANI ENDAH"],
+    [39,"00817174",19,2,42.5,4.5,1,"2026-06-08","2026-06-11",300,250,1.96,2.02,0,0,"RITA SAPITA"],
+    [40,"01006547",42,2,45,1.5,1,"2026-06-08","2026-06-11",302.5,350,2,1.98,0,0,"Hamdan Amd. Kep"],
+    [41,"00812952",58,1,59,2.5,1,"2026-06-08","2026-06-11",350,300,2.03,1.87,0,0,"LIA YULIANI ENDAH"],
+    [42,"00921526",59,2,52,2.2,1,"2026-06-09","2026-06-12",292.5,300,1.84,1.7,1,0,"PUPAH NURJANAH, AMD KEP"],
+    [43,"00995601",60,2,37,1.5,1,"2026-06-09","2026-06-12",250,250,2.2,2.2,0,0,"MULYANI ASHARI"],
+    [44,"00912964",30,2,61.5,2.5,1,"2026-06-09","2026-06-12",300,300,1.89,1.8,0,0,"Mohamad Falah Akbar Amd. Kep"],
+    [45,"00690542",49,2,36,0.7,1,"2026-06-09","2026-06-12",275,280,2.2,2,1,0,"EPI ABDUL WAHID, AMK"],
+    [46,"01002231",34,1,63,0.8,1,"2026-06-09","2026-06-12",400,420,1.9,1.82,0,0,"ALIMUDIN, AMK"],
+    [47,"01009311",57,2,50,1.5,1,"2026-06-09","2026-06-12",300,300,2.21,2.04,0,0,"MULYANI ASHARI"],
+    [48,"00208390",44,2,70,6,1,"2026-06-09","2026-06-12",350,350,1.96,1.9,0,0,"EPI ABDUL WAHID, AMK"],
+    [49,"00729781",61,2,46,2.1,1,"2026-06-09","2026-06-12",250,260,2.17,2.04,0,1,"MULYANI ASHARI"],
+    [50,"00842978",54,2,56,4,1,"2026-06-09","2026-06-12",300,350,2.05,2.12,0,0,"FUJI FRATIWI, AMK"],
+    [51,"01004057",45,2,45,0.9,1,"2026-06-09","2026-06-12",300,300,1.9,1.8,0,0,"Mohamad Falah Akbar Amd. Kep"],
+    [52,"00157706",62,2,50.5,4,1,"2026-06-09","2026-06-12",300,300,2,2,0,0,"Mohamad Falah Akbar Amd. Kep"],
+    [53,"00598965",54,1,58,0.9,1,"2026-06-12","2026-06-12",350,380,1.85,1.9,0,0,"EDEN TARMANSYAH"],
+    [54,"00340933",32,1,46,9,1,"2026-06-09","2026-06-12",300,350,2.05,2.2,0,0,"AGUSTINI ROKHMAH, AMK"],
+    [55,"00680556",47,2,51,6,1,"2026-06-09","2026-06-12",300,300,2.2,2.1,0,0,"FUJI FRATIWI, AMK"],
+    [56,"01027396",43,1,68,0.9,1,"2026-06-09","2026-06-12",360,380,1.8,1.9,0,0,"AGUSTINI ROKHMAH, AMK"],
+    [57,"00832078",70,1,58,2.1,1,"2026-06-09","2026-06-12",350,300,1.84,1.5,0,0,"TITA SETIAWATI, A.MD.KEP"],
+    [58,"00990205",20,1,36.5,3,1,"2026-06-09","2026-06-12",275,287.5,2.17,2.2,1,0,""],
+    [59,"00908122",32,1,94,2.7,1,"2026-06-09","2026-06-12",400,420,1.38,1.56,0,0,"AGUSTINI ROKHMAH, AMK"],
+    [60,"01027460",23,2,39,1.4,1,"2026-06-09","2026-06-12",300,262.5,2.4,2,0,0,"ALIMUDIN, AMK"],
+    [61,"00288501",53,2,42,3.7,1,"2026-06-09","2026-06-12",300,250,2.18,2.12,0,0,"EDEN TARMANSYAH"],
+    [62,"00605381",46,2,59,4.7,1,"","2026-06-12",262.5,300,1.81,1.85,1,0,"EDEN TARMANSYAH"],
+    [63,"00996936",51,2,62,1.5,1,"2026-06-09","2026-06-12",325,287.5,1.8,1.82,1,1,"FUJI FRATIWI, AMK"],
+    [64,"00819394",52,2,45,4.3,1,"2026-06-09","2026-06-12",300,300,2,1.83,0,0,"Rizki Indah Amalia Amd.Kep"],
+    [65,"00998238",51,2,63,1.5,1,"2026-06-09","2026-06-12",300,350,2.15,2.02,0,0,"Hamdan Amd. Kep"],
+    [66,"00835976",69,2,55.5,2.2,1,"2026-06-09","2026-06-12",300,250,2.04,1.9,0,0,"RIA AFRIANI SUROSO, AMK"],
+    [67,"00891820",52,2,53.5,0.9,1,"2026-06-09","2026-06-12",300,300,1.98,2.03,0,0,"AKHMAD TAUFIK, AMK"],
+    [68,"00417324",50,1,57,3,1,"2026-06-09","2026-06-12",350,350,1.8,1.97,0,0,"IRMA HERMAYANTI, AMD KEP"],
+    [69,"00593823",44,2,50,8.2,1,"2026-06-09","2026-06-12",287.5,300,1.89,2.2,1,0,""],
+    [70,"00850025",56,2,53,3.5,1,"2026-06-09","2026-06-12",300,300,1.88,1.96,0,0,"Alfi Nurgiawan Amd. Kep"],
+    [71,"00503409",54,2,37.5,8.7,1,"2026-06-09","2026-06-12",300,300,2,2,0,0,"Rizki Indah Amalia Amd.Kep"],
+    [72,"01024085",56,2,37,2.5,1,"2026-06-09","2026-06-12",275,250,2.03,1.93,0,1,"LIA YULIANI ENDAH"],
+    [73,"00170991",49,2,51.5,8,1,"2026-06-09","2026-06-12",300,300,2.2,2.11,0,0,"RITA SAPITA"],
+    [74,"00746752",50,2,60.5,1.5,1,"2026-06-09","2026-06-12",287.5,300,2.1,2.13,1,0,"Hamdan Amd. Kep"],
+    [75,"00949631",43,2,49.5,2.3,1,"2026-06-09","2026-06-12",300,300,1.86,1.83,0,1,"RITA SAPITA"],
+    [76,"01020241",22,1,46.5,2,1,"2026-06-09","2026-06-12",312.5,300,1.9,2.04,0,0,"IRMA HERMAYANTI, AMD KEP"],
+    [77,"01036217",34,2,66,0.9,1,"2026-06-09","2026-06-12",350,350,1.98,1.96,0,0,"Alfi Nurgiawan Amd. Kep"],
+    [78,"01038418",56,2,46.3,2,1,"2026-06-09","2026-06-12",275,300,2.1,2.11,0,0,"LIA YULIANI ENDAH"],
+    [79,"01018906",74,2,42,1,1,"2026-06-09","2026-06-12",300,237.5,2.3,1.86,0,0,"RITA SAPITA"],
+    [80,"01022702",62,2,40.5,2.2,1,"2026-06-09","2026-06-12",225,250,1.8,2.11,1,0,"HALIMATUSADIYAH, AMK"],
+    [81,"00986846",50,1,62,1,1,"2026-06-10","2026-06-13",350,350,2.13,1.9,0,0,"TITA SETIAWATI, A.MD.KEP"],
+    [82,"00229566",47,1,103,1,1,"2026-06-10","2026-06-13",375,400,1.3,1.4,0,0,"Mohamad Falah Akbar Amd. Kep"],
+  ];
+  const mkQB=v=>{const s=String(v);return[s,s,s,s,s,s];};
+  const mkIDH=n=>{const a=[false,false,false,false,false,false];for(let i=0;i<Math.min(n,6);i++)a[i]=true;return a;};
+  records=OLD.map(row=>{
+    const[no,rm,usia,jk,bbk,lhd,akses,tgl1,tgl2,qb1,qb2,ktv1,ktv2,ep1,ep2,pwr]=row;
+    const raw={no_rm:String(rm),usia:String(usia),jenis_kel:String(jk),bb_kering:String(bbk),lama_hd:String(lhd),akses_vask:String(akses),tgl_s1:tgl1||"",tgl_s2:tgl2||"",qb_s1:mkQB(qb1),qb_s2:mkQB(qb2),ktv_s1:String(ktv1),ktv_s2:String(ktv2),idh_s1:mkIDH(ep1),idh_s2:mkIDH(ep2),bb_pre_s1:"",bb_pre_s2:"",uf_vol_s1:"",uf_vol_s2:"",time_s1:"",time_s2:"",diisi_oleh:pwr||""};
+    return deriveRecord(raw,no);
+  });
+  saveLocal();
+  document.getElementById("import-banner").style.display="none";
+  // Kirim ke Sheets batch hanya jika manual klik
+  if(manual && SCRIPT_URL){
+    toast("⏳ Mengupload 82 data ke Google Sheets...","#1565C0");
+    for(const r of records){
+      fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify(flattenForSheets(r)),mode:"no-cors"}).catch(()=>{});
+    }
+    setTimeout(()=>toast("✅ 82 responden berhasil diimport!","#1B7A3E"),2000);
+  } else if(manual) {
+    toast("✅ 82 responden diimport!","#1B7A3E");
+  }
+  switchTab("data");
+}
+
+// ── TABS & TOAST ───────────────────────────────────────────────────────────
+function switchTab(t){
+  document.getElementById("page-form").style.display=t==="form"?"block":"none";
+  document.getElementById("page-data").style.display=t==="data"?"block":"none";
+  document.getElementById("tab-form").className="tab-btn"+(t==="form"?" active":"");
+  document.getElementById("tab-data").className="tab-btn"+(t==="data"?" active":"");
+  if(t==="data") renderData();
+}
+function toast(msg,bg="#1B7A3E"){
+  const el=document.getElementById("toast");
+  el.textContent=msg;el.style.background=bg;el.style.display="block";
+  clearTimeout(el._t);el._t=setTimeout(()=>el.style.display="none",5000);
+}
+</script>
+</body>
+</html>
