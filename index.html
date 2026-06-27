@@ -132,9 +132,10 @@ input[type=number].center{text-align:center;font-weight:700;font-size:14px;}
     <div class="logo-icon">🩺</div>
     <div>
       <div class="logo-title">Observasi QB-HD</div>
-      <div class="logo-sub">
+      <div class="logo-sub" onclick="openReconfigure()" style="cursor:pointer" title="Ketuk untuk ubah/cek Script URL">
         <div class="dot" id="dot"></div>
         <span class="logo-status" id="status-txt">Memuat...</span>
+        <span style="font-size:10px;opacity:.7;margin-left:2px">⚙️</span>
       </div>
     </div>
   </div>
@@ -169,6 +170,7 @@ input[type=number].center{text-align:center;font-weight:700;font-size:14px;}
     Panduan lengkap ada di README. Setelah diisi, data otomatis tersimpan ke cloud.</p>
     <input type="text" id="gscript-url" placeholder="https://script.google.com/macros/s/AKfyc.../exec"/>
     <button onclick="saveScriptUrl()">✅ Simpan & Hubungkan</button>
+    <button id="cancel-reconfig" onclick="closeReconfigure()" style="display:none;background:none;border:1px solid var(--orange);color:var(--orange);margin-left:6px">✕ Batal</button>
     <div style="margin-top:8px;font-size:11px;color:var(--orange)">
       💡 Belum punya script URL? <a href="#" onclick="showGuide()" style="color:var(--blue);font-weight:700">Lihat panduan singkat</a>
     </div>
@@ -452,6 +454,7 @@ let idh_s2 = [false,false,false,false,false,false];
 let delConfirm = null;
 let sigTarget = null;
 let sigDrawing = false, sigCtx = null;
+let forceSetup = false;
 
 // ── MATH ───────────────────────────────────────────────────────────────────
 const mean = a => { const n=a.map(v=>parseFloat(v)).filter(v=>!isNaN(v)); return n.length?Math.round(n.reduce((x,y)=>x+y,0)/n.length*10)/10:null; };
@@ -502,7 +505,7 @@ function saveLocalCache(){
 
 function updateSetupBanner() {
   const banner = document.getElementById("setup-banner");
-  if(SCRIPT_URL) {
+  if(SCRIPT_URL && !forceSetup) {
     banner.style.display = "none";
     document.getElementById("import-banner").style.display = records.length === 0 ? "block" : "none";
   } else {
@@ -511,11 +514,25 @@ function updateSetupBanner() {
   }
 }
 
+function openReconfigure() {
+  forceSetup = true;
+  document.getElementById("gscript-url").value = SCRIPT_URL || "";
+  document.getElementById("cancel-reconfig").style.display = SCRIPT_URL ? "inline-block" : "none";
+  updateSetupBanner();
+  document.getElementById("setup-banner").scrollIntoView({behavior:"smooth"});
+}
+
+function closeReconfigure() {
+  forceSetup = false;
+  updateSetupBanner();
+}
+
 function saveScriptUrl() {
   const url = document.getElementById("gscript-url").value.trim();
   if(!url.startsWith("https://script.google.com")) { toast("⚠️ URL tidak valid. Harus diawali https://script.google.com","#C25B00"); return; }
   SCRIPT_URL = url;
   localStorage.setItem("gscript_url", url);
+  forceSetup = false;
   toast("✅ Script URL tersimpan! Mengambil data...","#1B7A3E");
   updateSetupBanner();
   fetchAll();
